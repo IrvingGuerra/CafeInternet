@@ -28,10 +28,7 @@ public:
 	Respuesta(int port);
 
 	// Obtiene una respuesta de algún cliente.
-	mensaje *getRequest();
-
-	// Envía respuestas.
-	void sendReply(char *reply, unsigned int replyLen);
+	void getRequest();
 };
 
 #endif

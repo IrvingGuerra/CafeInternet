@@ -8,8 +8,7 @@
 
 #include "PaqueteDatagrama.h"
 
-class SocketDatagrama
-{
+class SocketDatagrama{
 public:
     SocketDatagrama(int puertoLocal);
     ~SocketDatagrama();
@@ -18,10 +17,17 @@ public:
     //Envía un paquete tipo datagrama desde este socket
     int envia(PaqueteDatagrama &p);
 
+    int esperaPeticion();
+    int conectar(const char *IpAddress, int puerto);
+
+    int enviaImagen(int socket);
+
+    int recibeImagen();
 private:
     struct sockaddr_in direccionLocal;
     struct sockaddr_in direccionForanea;
     int s; //ID socket
+    int primeraVez = 0;
 };
 
 #endif

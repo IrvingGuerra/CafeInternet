@@ -1,29 +1,31 @@
 #include "Solicitud.h"
 
+#include <time.h>
 #include <iostream>
 
-int main(int argc, char const *argv[])
-{
-    if (argc != 3)
-    {
-        printf("Forma de ejecutar: ./%s [SERVER IP ADDRESS] [SERVER PORT]\n", argv[0]);
+int main(int argc, char const *argv[]){
+    if (argc != 6){
+        printf("Forma de ejecutar: ./%s [ID_RED] [SERVER PORT] [TIEMPO] [HOST_FIRST] [HOST_LAST]\n", argv[0]);
         exit(0);
     }
 
-    // Obtención de operandos.
-    int operandos[2];
-    std::cout << "Ingrese operandos separados por espacio: ";
-    std::cin >> operandos[0] >> operandos[1];
+    while(1){
+        // Solicitud.
+        //Ocupamos ID de RED
+        std::string id_red = argv[1];
 
-    // Solicitud.
-    Solicitud solicitud;
-    int resultado;
-
-    // Resultados.
-    resultado = *(int *)solicitud.doOperation(argv[1], atoi(argv[2]), ADD, (char *)operandos, sizeof(operandos));
-    std::cout << "Suma: " << resultado << std::endl;
-    resultado = *(int *)solicitud.doOperation(argv[1], atoi(argv[2]), SUB, (char *)operandos, sizeof(operandos));
-    std::cout << "Resta: " << resultado << std::endl;
+        for (int i = atoi(argv[4]); i <= atoi(argv[5]); ++i){
+            id_red = id_red.substr(0, id_red.size()-1); //Quitamos el ultimo byte
+            std::string host = id_red + "" + std::to_string(i);
+            const char *hostSend = host.c_str();
+            Solicitud solicitud;
+            // Resultados.
+            solicitud.doOperation(hostSend, atoi(argv[2]));
+            solicitud.cerrarSocket();
+        }
+        
+        usleep(atoi(argv[3]) * 1000000);
+    }
 
     return 0;
 }

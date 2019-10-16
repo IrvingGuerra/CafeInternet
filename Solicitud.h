@@ -4,8 +4,7 @@
 #include "SocketDatagrama.h"
 #include "mensaje.h"
 
-class Solicitud
-{
+class Solicitud{
 private:
 	// Socket local para enviar y recibir paquetes por parte del cliente.
 	SocketDatagrama *socketlocal;
@@ -13,8 +12,8 @@ private:
 public:
 	// Constructor de una objeto que realiza solicitudes.
 	Solicitud();
-
 	// Operación para enviar petición. Retorna respuesta recibida.
-	char *doOperation(const char *IpAddress, int puerto, int operationId, char *args, unsigned int argsLen);
+	void doOperation(const char *IpAddress, int puerto);
+	void cerrarSocket();
 };
 #endif
