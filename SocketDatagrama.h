@@ -22,12 +22,11 @@ public:
 
     int enviaImagen(int socket);
 
-    int recibeImagen();
+    int recibeImagen(const char *serverIpAdress);
 private:
     struct sockaddr_in direccionLocal;
     struct sockaddr_in direccionForanea;
     int s; //ID socket
-    int primeraVez = 0;
 };
 
 #endif

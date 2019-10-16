@@ -77,7 +77,25 @@ int SocketDatagrama::enviaImagen(int socket){
   int size, read_size, stat, packet_index;
   char send_buffer[10240], read_buffer[256];
   packet_index = 1;
-  picture = fopen("capture.png", "r");
+
+  //Realizamos una captura de pantalla
+
+  char *ip = inet_ntoa(direccionLocal.sin_addr);
+
+  std::string ip_add = ip;
+
+  std::cout << "[ INFO ] " << std::tab << "Dir local: " <<  ip << std::endl;
+
+  std::string COMANDO = "gnome-terminal -x sh -c 'scrot "+ ip_add +".png -q 1; exec bash'";
+
+  const char *CMD = COMANDO.c_str();
+
+  system(CMD);
+
+  std::string name_img = ip_add +".png";
+  const char *name_IMAGE = name_img.c_str();
+
+  picture = fopen(name_IMAGE, "r");
 
   if(picture == NULL) {
     std::cout << "[ ERROR ] " << std::tab << "Error al obtener la imagen" << std::endl;
@@ -113,7 +131,7 @@ int SocketDatagrama::enviaImagen(int socket){
   return 0;
 }
 
-int SocketDatagrama::recibeImagen(){
+int SocketDatagrama::recibeImagen(const char *serverIpAdress){
   int recv_size = 0,size = 0, read_size, write_size, packet_index =1,stat;
   char imagearray[10241];
   FILE *image;
@@ -129,8 +147,15 @@ int SocketDatagrama::recibeImagen(){
     stat = write(s, &buffer, sizeof(int));
   }while(stat<0);
 
+
+
+  std::string ip_add = serverIpAdress;
+
+  std::string name_img = "www/images/"+ip_add +".png";
+  const char *name_IMAGE = name_img.c_str();
+
   //Clona la imagen
-  image = fopen("capture2.png", "w");
+  image = fopen(name_IMAGE, "w");
 
   if( image == NULL) {
     std::cout << "[ ERROR ] " << std::tab << "Ocurriro un error al clonar la imagen" << std::endl;
@@ -182,3 +207,4 @@ int SocketDatagrama::recibeImagen(){
 SocketDatagrama::~SocketDatagrama(){
     close(s);
 }
+

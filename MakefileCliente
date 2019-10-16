@@ -2,13 +2,13 @@ PROJECT = cliente
 CFLAGS = -Wall
 LDFLAGS = -lm -lpthread
 CC = g++
-EXCLUDED_FILES = servidor.cpp Respuesta.cpp
+EXCLUDED_FILES = servidor.cpp Respuesta.cpp servidorWEB.cpp
 OBJECTS = $(patsubst %.cpp, %.o, $(filter-out $(EXCLUDED_FILES),$(wildcard *.cpp)))
 
 ID_RED = 192.168.0.0
 HOST_FIRST = 8
 HOST_LAST = 8
-SERVER_PORT = 5000
+SERVER_PORT = 4000
 TIEMPO = 5
 ARGS = $(ID_RED) $(SERVER_PORT) $(TIEMPO) $(HOST_FIRST) $(HOST_LAST)
 
